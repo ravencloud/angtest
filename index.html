@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en" ng-app="reportApp">
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css" />
+	<title>QA CNA or FNV</title>
+	<!--Style to not show angular templates on page load-->
+	<style type="text/css">
+		.ng-cloak {
+			opacity: 0;
+		}
+	</style>
+	
+</head>
+<body>
+ <h1>QA CNV or FNV</h1>
+	<h2>Please select QA and release.</h2>
+	<!--QA report selectors, assign submit to grab results-->
+	<form name="reportSelectors" ng-submit="getResults()" ng-controller="resultsCTRL" class="ng-cloak">
+			<!--loop through account results, show only QA, order by LookupName and assign selector value to LookupName-->
+			<div id="qaSelectors" ng-controller="qaEngineerCTRL as qaEngineerApp">
+				<div id="accounts" ng-repeat="qa in qaEngineers">
+					<label for="qaList">QA Engineer:</label>
+						<select id="qaList" name="qaList" size="8" required>
+							<option ng-repeat="node in qa | orderBy:orderProp" ng-show="node.CustomFields$SCRUM$Role$LookupName === 'QA'" value="{{ node.LookupName }}">
+							{{ node.LookupName }}</option>
+						</select>
+				</div>
+			</div>		
+			
+			<!--loop through release results and assign selector value to LookupName-->
+			<div id="releaseSelectors" ng-controller="releaseCTRL as releaseApp">
+				<div id="release" ng-repeat="release in releases">
+					<label for="releaseList">Release:</label>
+						<select id="releaseList" name="releaseList" size="8" required>
+							<option ng-repeat="node in release" value="{{ node.LookupName }}">
+							{{ node.LookupName }}</option>
+						</select>
+				</div>
+			</div>
+				<button type="submit" id="submit" value="submit">Submit</button>
+			
+			<!--After form submit, check results and display table if results exist, otherwise display text-->
+				<div id="reportResults" ng-controller="resultsCTRL as resultsApp">
+				<div id="results" ng-repeat="result in results">
+					<table ng-hide="!result.length">
+						<tr><th>Reference Number</th><th>Subject</tr>
+						<tr id="reported" ng-repeat="node in result">
+							<td><a ng-href='http://qa.custhelp.com/app/zoombox/{{node["Reference #"]}}'>{{ node["Reference #"] }}</a></td>
+							<td>{{ node.Subject }}</td>
+						</tr>	
+					</table>
+					<h3 ng-show="!result.length">No incidents are either CNA or FNV for the specified QA and release.</h3>
+				</div>
+			</div>
+		</form >
+
+		<script type="text/javascript" src="angular.min.js"></script>
+		<script type="text/javascript" src="app.js"></script>
+		<script type="text/javascript" src="qaEngineer.js"></script>
+		<script type="text/javascript" src="releaseApp.js"></script>
+		<script type="text/javascript" src="resultsApp.js"></script>
+</body>
+</html>
