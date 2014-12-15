@@ -9,11 +9,10 @@ var resultsApp = angular.module('resultsApp', []);
 				$scope.selectedRelease = encodeURI(document.getElementById("releaseList").value);
 				var report = "https://qa.custhelp.com/cc/fleet/report/165629?Status=111,3,110&Account=";
 				report += $scope.selectedQA + "&TBII=" + $scope.selectedRelease + "&callback=JSON_CALLBACK";
-				//var report = "https://qa.custhelp.com/cc/fleet/report/165629?Status=111,3,110&Account=Heather%20Curtis&TBII=15.5%20(May%2015)&callback=JSON_CALLBACK";
+				
 				
 				$http.jsonp(report)
 				.success(function(data){
-					console.log(data);
 					$scope.results = [data.nodes];
 			
 					

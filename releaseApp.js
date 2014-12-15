@@ -8,7 +8,6 @@ var releaseApp = angular.module('releaseApp', []);
 		
 		$http.jsonp(release)
 		.success(function(data){
-			console.log(data);
 			$scope.releases = [data.nodes];
 	
 			

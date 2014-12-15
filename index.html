@@ -46,7 +46,7 @@
 					<table ng-hide="!result.length">
 						<tr><th>Reference Number</th><th>Subject</tr>
 						<tr id="reported" ng-repeat="node in result">
-							<td><a ng-href='http://qa.custhelp.com/app/zoombox/{{node["Reference #"]}}'>{{ node["Reference #"] }}</a></td>
+							<td><a ng-href='https://qa.custhelp.com/app/zoombox/incident/refno/{{node["Reference #"]}}'>{{ node["Reference #"] }}</a></td>
 							<td>{{ node.Subject }}</td>
 						</tr>	
 					</table>

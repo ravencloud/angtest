@@ -8,7 +8,6 @@ var qaEngineerApp = angular.module('qaEngineerApp', []);
 		
 		$http.jsonp(qaEng)
 		.success(function(data){
-			console.log(data);
 			$scope.qaEngineers = [data.nodes];
 	
 			
